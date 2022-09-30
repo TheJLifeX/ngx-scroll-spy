@@ -1,0 +1,74 @@
+@import './styles/colors.scss';
+@import './styles/settings.scss';
+@import './styles/utility-classes.scss';
+
+html {
+  scroll-behavior: smooth; // Smooth scrolling to id. See: https://www.w3schools.com/howto/howto_css_smooth_scroll.asp.
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+html,
+body {
+  color: var(--app-text-color);
+  background-color: var(--app-background-color);
+}
+
+main {
+  margin-top: 6rem;
+}
+
+hr.intersection-line {
+  position: fixed;
+  top: 10%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: red;
+  border: none;
+  width: 100%;
+}
+
+// Overwrite bootstrap styles
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1340px;
+  }
+}
+
+.list-group-item,
+.nav-link {
+
+  &.active {
+    background-color: var(--app-primary-color) !important;
+  }
+}
+
+// Source: https://stackoverflow.com/a/33571268
+
+.list-group.list-group-root {
+  padding: 0;
+  overflow: hidden;
+}
+
+.list-group.list-group-root .list-group {
+  margin-bottom: 0;
+}
+
+.list-group.list-group-root .list-group-item {
+  border-radius: 0;
+  border-width: 1px 0 0 0;
+}
+
+.list-group.list-group-root>.list-group-item:first-child {
+  border-top-width: 0;
+}
+
+.list-group.list-group-root>.list-group>.list-group-item {
+  padding-left: 50px;
+}
+
+// End - Overwrite boostrap stlyes.

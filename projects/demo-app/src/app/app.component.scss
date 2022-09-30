@@ -1,0 +1,18 @@
+.app-navbar {
+  box-shadow: var(--app-navbar-box-shadow);
+}
+
+main {
+  margin-top: 6rem;
+}
+
+div.section {
+  background-color: aqua;
+}
+
+#line {
+  position: fixed;
+  top: 20%;
+  border-top: solid 1px red;
+  width: 100%;
+}

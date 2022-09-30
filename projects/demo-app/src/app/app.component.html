@@ -1,0 +1,296 @@
+<nav class="app-navbar navbar navbar-expand-lg navbar-light bg-light fixed-top justify-content-between mb-5">
+  <div class="container">
+    <a
+      class="navbar-brand primary-color"
+      href="#"
+    >
+      NgxScrollSpy
+    </a>
+    <button
+      class="navbar-toggler"
+      style="outline: none;"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div
+      class="collapse navbar-collapse"
+      id="navbarSupportedContent"
+    >
+      <ul class="navbar-nav ml-auto">
+        <li
+          class="nav-item mr-lg-3 mr-xl-4"
+          *ngFor="let link of navbarLinks"
+        >
+          <a
+            class="nav-link app-tab-link"
+            [routerLink]="['/']"
+            [fragment]="link.fragment"
+            spy
+            [spyTargetId]="link.fragment"
+            [spyActiveClass]="'app-tab-link--is-active'"
+          >
+            {{ link.name }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container">
+  <header class="mb-5">
+    <h1>NgxScrollSpy</h1>
+    <p>Automatically set links as active based on scroll position to indicate which link is
+      currently active in the viewport.</p>
+  </header>
+  <ng-container *ngFor="let link of navbarLinks; let index = index">
+    <span
+      [id]="link.fragment"
+      class="anchor-navigation-with-margin-top"
+    ></span>
+    <section
+      spyTarget
+      [spyTargetId]="link.fragment"
+    >
+      <h2>{{ link.name }}</h2>
+      <span> {{ loremIpsum.repeat(3) }} </span>
+
+      <!-- Example with navbar -->
+      <ng-container *ngIf="index === 0">
+        <nav class="navbar navbar-light bg-light">
+          <span class="navbar-brand">{{ exampleNavBar.title }}</span>
+          <ul class="nav nav-pills">
+            <li
+              class="nav-item"
+              *ngFor="let item of exampleNavBar.items"
+            >
+              <span
+                class="nav-link"
+                spy
+                [spyTargetId]="item.fragment"
+                [spyTargetContainerId]="exampleNavBar.spyTargetContainerId"
+                [spyActiveClass]="exampleNavBar.spyActiveClass"
+              >{{ item.name }}</span>
+            </li>
+          </ul>
+        </nav>
+        <div
+          spyTargetContainer
+          [spyTargetContainerId]="exampleNavBar.spyTargetContainerId"
+          style="height: 300px; overflow: auto;"
+        >
+          <div
+            *ngFor="let item of exampleNavBar.items"
+            spyTarget
+            [spyTargetId]="item.fragment"
+            [spyTargetContainerId]="exampleNavBar.spyTargetContainerId"
+          >
+            <h3> {{ item.name }}</h3>
+            <span>{{ loremIpsum.repeat(5) }}</span>
+          </div>
+        </div>
+      </ng-container>
+      <!-- End: Example with navbar -->
+
+      <!-- Example with navbar and sidebar -->
+      <ng-container *ngIf="index === 1">
+        <nav class="navbar navbar-light bg-light">
+          <span class="navbar-brand">{{ exampleNavBarAndSideBar.title }}</span>
+          <ul class="nav nav-pills">
+            <li
+              class="nav-item"
+              *ngFor="let item of exampleNavBarAndSideBar.navBarItems"
+            >
+              <span
+                class="nav-link"
+                spy
+                [spyTargetId]="item.fragment"
+                [spyTargetContainerId]="exampleNavBarAndSideBar.spyTargetContainerId"
+                [spyActiveClass]="exampleNavBarAndSideBar.spyActiveClass"
+              >{{ item.name }}</span>
+            </li>
+          </ul>
+        </nav>
+        <div class="row">
+          <div class="col-3">
+            <div class="list-group">
+              <span
+                class="list-group-item list-group-item-action"
+                *ngFor="let item of exampleNavBarAndSideBar.sidebarItems"
+                spy
+                [spyTargetId]="item.fragment"
+                [spyTargetContainerId]="exampleNavBarAndSideBar.spyTargetContainerId"
+                [spyActiveClass]="exampleNavBarAndSideBar.spyActiveClass"
+              >
+                {{ item.name }}
+              </span>
+            </div>
+          </div>
+          <div
+            class="col-9"
+            spyTargetContainer
+            [spyTargetContainerId]="exampleNavBarAndSideBar.spyTargetContainerId"
+            style="height: 300px; overflow: auto;"
+          >
+            <div
+              *ngFor="let item of exampleNavBarAndSideBar.navBarItems"
+              spyTarget
+              [spyTargetId]="item.fragment"
+              [spyTargetContainerId]="exampleNavBarAndSideBar.spyTargetContainerId"
+            >
+              <h3> {{ item.name }}</h3>
+              <ng-container *ngIf="item.name === 'Pricing'; else elseTemplate">
+                <div class="m-3">
+                  <div
+                    *ngFor="let sidebarItem of exampleNavBarAndSideBar.sidebarItems"
+                    spyTarget
+                    [spyTargetId]="sidebarItem.fragment"
+                    [spyTargetContainerId]="exampleNavBarAndSideBar.spyTargetContainerId"
+                  >
+                    <h4>{{ sidebarItem.name }}</h4>
+                    <span>{{ loremIpsum.repeat(3) }}</span>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-template #elseTemplate>
+                <span>{{ loremIpsum.repeat(5) }}</span>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+      </ng-container>
+      <!-- End: Example with navbar and sidebar -->
+
+      <!-- Example with list-group -->
+      <ng-container *ngIf="index === 2">
+        <div class="row">
+          <div class="col-3">
+            <div class="list-group">
+              <span
+                class="list-group-item list-group-item-action"
+                *ngFor="let item of exampleListGroup.items"
+                spy
+                [spyTargetId]="item.fragment"
+                [spyTargetContainerId]="exampleListGroup.spyTargetContainerId"
+                [spyActiveClass]="exampleListGroup.spyActiveClass"
+              >
+                {{ item.name }}
+              </span>
+            </div>
+          </div>
+          <div
+            class="col-9"
+            spyTargetContainer
+            [spyTargetContainerId]="exampleListGroup.spyTargetContainerId"
+            style="height: 300px; overflow: auto;"
+          >
+            <div
+              *ngFor="let item of exampleListGroup.items"
+              spyTarget
+              [spyTargetId]="item.fragment"
+              [spyTargetContainerId]="exampleListGroup.spyTargetContainerId"
+            >
+              <h3> {{ item.name }}</h3>
+              <span>{{ loremIpsum.repeat(5) }}</span>
+            </div>
+          </div>
+        </div>
+
+      </ng-container>
+      <!-- End: Example with list-group -->
+
+      <!-- Example with nested list-group -->
+      <ng-container *ngIf="index === 3">
+        <div class="row">
+          <div class="col-3">
+
+            <div class="list-group list-group-root">
+              <ng-container *ngFor="let item of exampleNestedListGroup.items">
+                <span
+                  class="list-group-item"
+                  spy
+                  [spyTargetId]="item.fragment"
+                  [spyTargetContainerId]="exampleNestedListGroup.spyTargetContainerId"
+                  [spyActiveClass]="exampleNestedListGroup.spyActiveClass"
+                >
+                  {{ item.name }}
+                </span>
+                <div
+                  class="list-group"
+                  *ngIf="item.subItems"
+                >
+
+                  <span
+                    class="list-group-item"
+                    *ngFor="let subItem of item.subItems"
+                    spy
+                    [spyTargetId]="subItem.fragment"
+                    [spyTargetContainerId]="exampleNestedListGroup.spyTargetContainerId"
+                    [spyActiveClass]="exampleNestedListGroup.spyActiveClass"
+                  >
+                    {{ subItem.name }}
+                  </span>
+
+                </div>
+              </ng-container>
+
+            </div>
+
+          </div>
+          <div
+            class="col-9"
+            spyTargetContainer
+            [spyTargetContainerId]="exampleNestedListGroup.spyTargetContainerId"
+            style="height: 415px; overflow: auto;"
+          >
+            <div
+              *ngFor="let item of exampleNestedListGroup.items"
+              spyTarget
+              [spyTargetId]="item.fragment"
+              [spyTargetContainerId]="exampleNestedListGroup.spyTargetContainerId"
+            >
+              <h3> {{ item.name }}</h3>
+              <ng-container *ngIf="item.subItems; else elseTemplate">
+                <div class="m-3">
+                  <div
+                    *ngFor="let subItem of item.subItems"
+                    spyTarget
+                    [spyTargetId]="subItem.fragment"
+                    [spyTargetContainerId]="exampleNestedListGroup.spyTargetContainerId"
+                  >
+                    <h4>{{ subItem.name }}</h4>
+                    <span>{{ loremIpsum.repeat(3) }}</span>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-template #elseTemplate>
+                <span>{{ loremIpsum.repeat(10) }}</span>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+      </ng-container>
+      <!-- End: Example with nested list-group -->
+
+    </section>
+  </ng-container>
+</main>
+
+<footer
+  class="container"
+  style="margin-top: 100vh;"
+>
+  <h2>Footer</h2>
+  <p><span>{{ loremIpsum.repeat(3) }}</span></p>
+</footer>
+
+<div id="line"></div>

@@ -1,12 +1,11 @@
 {
   "name": "ngx-scroll-spy",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "dev--ngx-scroll-spy": "ng build ngx-scroll-spy --watch",
+    "dev--demo-app": "ng serve demo-app --open",
+    "build": "powershell rm ./dist/* -Recurse && ng build ngx-scroll-spy --configuration=production && powershell cp ./LICENSE,./README.md ./dist/ngx-scroll-spy/",
+    "publish-library": "npm run build && npm publish ./dist/ngx-scroll-spy/ && powershell rm ./dist/* -Recurse"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +22,7 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "^14.2.4",
     "@angular/cli": "~14.2.4",
     "@angular/compiler-cli": "^14.2.0",
     "@types/jasmine": "~4.0.0",
@@ -32,6 +32,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
+    "ng-packagr": "^14.2.0",
     "typescript": "~4.7.2"
   }
 }

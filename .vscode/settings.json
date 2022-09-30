@@ -1,0 +1,5 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "html.format.wrapAttributes": "force-expand-multiline"
+}

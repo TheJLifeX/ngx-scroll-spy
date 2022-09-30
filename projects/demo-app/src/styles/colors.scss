@@ -1,0 +1,34 @@
+$app-white-color: #f9fafa;
+$app-light-color: #717477;
+$app-lighter-color: #c4c4c4;
+
+:root {
+  --app-primary-color: #2980b9;
+  --app-text-color: #323639;
+  --app-white-color: #{$app-white-color};
+  --app-background-color: #{$app-white-color};
+  --app-light-color: #{$app-light-color};
+  --app-lighter-color: #{$app-lighter-color};
+  --app-footer-text-color: rgba(255, 255, 255, 0.6);
+  --app-footer-background-color: #1f2d41;
+}
+
+:root.dark-theme {
+  --app-text-color: white;
+  --app-background-color: #323639;
+  --app-footer-background-color: #212528;
+  --app-light-color: #{$app-lighter-color};
+  --app-lighter-color: #{$app-light-color};
+}
+
+.primary-color {
+  color: var(--app-primary-color);
+}
+
+.light-color {
+  color: var(--app-light-color);
+}
+
+.lighter-color {
+  color: var(--app-lighter-color);
+}

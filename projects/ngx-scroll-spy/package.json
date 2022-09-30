@@ -1,0 +1,25 @@
+{
+  "name": "ngx-scroll-spy",
+  "version": "0.0.1",
+  "author": "Ulrich Tiofack",
+  "peerDependencies": {
+    "@angular/common": ">=14",
+    "@angular/core": ">=14"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "description": "@todo",
+  "keywords": [
+    "@todo"
+  ],
+  "homepage": "https://github.com/TheJLifeX/ngx-scroll-spy#readme",
+  "bugs": {
+    "url": "https://github.com/TheJLifeX/ngx-scroll-spy/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheJLifeX/ngx-scroll-spy.git"
+  },
+  "license": "MIT"
+}
