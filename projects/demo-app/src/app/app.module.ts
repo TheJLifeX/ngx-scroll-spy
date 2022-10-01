@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { SpyDirective, SpyTargetContainerDirective, SpyTargetDirective } from 'ngx-scroll-spy';
-
+import { SpyDirective, SpyTargetDirective, SpyTargetContainerDirective } from 'ngx-scroll-spy';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 

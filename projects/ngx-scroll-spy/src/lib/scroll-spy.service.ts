@@ -18,7 +18,7 @@ export class ScrollSpyService implements OnDestroy {
   /**
    * Default scroll-spy on the default scroll element (Document/Body).
    */
-  private readonly defaultScrollSpy = new ScrollSpy();
+  private readonly defaultScrollSpy: ScrollSpy = new ScrollSpy();
   /**
    * Map containing created scroll-spies (on any scrollable elements).
    *

@@ -1,4 +1,4 @@
-import { Subject, Subscription, fromEvent, debounceTime } from 'rxjs';
+import { Subject, Subscription, fromEvent, debounceTime, Observable } from 'rxjs';
 import { ScrollSpyOptions } from './models/scroll-spy-options';
 import { SpyTarget } from './models/spy-target';
 import { SpyTargetIsIntersectingEvent } from './models/spy-target-is-intersecting-event';
@@ -7,7 +7,8 @@ import { SpyTargetIsIntersectingEvent } from './models/spy-target-is-intersectin
  * Encapsulates the logic for scroll spy on a scrollable element (`scrollContainer`).
  *
  * Scroll spy uses the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
- * Still works properly after the window is resized.
+ *
+ * Supports window resizing.
  *
  * Inspired by:
  * - https://grafikart.fr/tutoriels/scrollspy-js-page-491
@@ -16,11 +17,11 @@ import { SpyTargetIsIntersectingEvent } from './models/spy-target-is-intersectin
  */
 export class ScrollSpy {
 
-  private readonly spyTargetIsIntersectingSubject$ = new Subject<SpyTargetIsIntersectingEvent>();
+  private readonly spyTargetIsIntersectingSubject$: Subject<SpyTargetIsIntersectingEvent> = new Subject<SpyTargetIsIntersectingEvent>();
   /**
    * Is emitted when a spy-target has transitioned into a state of intersection (`isIntersecting: true`) or out of a state of intersection (`isIntersecting: false`).
    */
-  readonly spyTargetIsIntersecting$ = this.spyTargetIsIntersectingSubject$.asObservable();
+  readonly spyTargetIsIntersecting$: Observable<SpyTargetIsIntersectingEvent> = this.spyTargetIsIntersectingSubject$.asObservable();
   private resizeSubscription?: Subscription;
   private spyTargets: SpyTarget[] = [];
   private intersectionObserver: IntersectionObserver | null = null;
