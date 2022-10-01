@@ -1,8 +1,13 @@
 import { Subject, Subscription, fromEvent, debounceTime } from 'rxjs';
-import { SpyTarget } from './spy-target';
+import { ScrollSpyOptions } from './models/scroll-spy-options';
+import { SpyTarget } from './models/spy-target';
+import { SpyTargetIsIntersectingEvent } from './models/spy-target-is-intersecting-event';
 
 /**
- * Class containing the logic for scroll spy.
+ * Encapsulates the logic for scroll spy on a scrollable element (`scrollContainer`).
+ *
+ * Scroll spy based on the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
+ * Still works properly after the window is resized.
  *
  * Inspired by:
  * - https://grafikart.fr/tutoriels/scrollspy-js-page-491
@@ -11,57 +16,24 @@ import { SpyTarget } from './spy-target';
  */
 export class ScrollSpy {
 
-  private readonly activeSpyTargetChangedSubject$ = new Subject<SpyTargetChangedEvent>();
+  private readonly spyTargetIsIntersectingSubject$ = new Subject<SpyTargetIsIntersectingEvent>();
   /**
-   * Emits the active spy target events.
+   * Is emitted when a spy-target has transitioned into a state of intersection (`isIntersecting: true`) or out of a state of intersection (`isIntersecting: false`).
    */
-  readonly activeSpyTargetChanged$ = this.activeSpyTargetChangedSubject$.asObservable();
+  readonly spyTargetIsIntersecting$ = this.spyTargetIsIntersectingSubject$.asObservable();
   private resizeSubscription?: Subscription;
   private spyTargets: SpyTarget[] = [];
-  private isSpying: boolean = false;
   private intersectionObserver: IntersectionObserver | null = null;
   private readonly resizeDebounceTime: number = 300;
   /**
    * Defines the (vertical) position of the IntersectionObserver line.
    * Value between `0` (at the top) and `100` (at the bottom).
    *
-   * @todo (For a future version) This property can be configured by the user.
+   * @todo (For a future version of ngx-scroll-spy) This property should be configured by the user.
    */
-  private readonly ratio: number = 20;
+  private readonly offset: number = 20;
 
-  constructor(options: ScrollSpyOptions = {}) {
-    this.startSpying(options.scrollContainer);
-  }
-
-  addTarget(spyTarget: SpyTarget): void {
-    this.spyTargets.push(spyTarget);
-    this.intersectionObserver?.observe(spyTarget.element);
-  }
-
-  removeTarget(spyTarget: SpyTarget): void {
-    this.spyTargets = this.spyTargets.filter(spyTarget => spyTarget.id !== spyTarget.id);
-    this.intersectionObserver?.unobserve(spyTarget.element);
-  }
-
-  stopSpying(): void {
-    if (!this.isSpying) {
-      return;
-    }
-    this.resizeSubscription?.unsubscribe();
-    this.intersectionObserver?.disconnect();
-    this.intersectionObserver = null;
-    this.spyTargets = [];
-
-    this.activeSpyTargetChangedSubject$.complete();
-    this.isSpying = false;
-  }
-
-  private startSpying(scrollContainer?: Element): void {
-    if (this.isSpying) {
-      return;
-    }
-    this.isSpying = true;
-
+  constructor({ scrollContainer }: ScrollSpyOptions = {}) {
     this.initIntersectionObserver(scrollContainer);
 
     this.resizeSubscription = fromEvent(window, 'resize').pipe(
@@ -70,7 +42,34 @@ export class ScrollSpy {
   }
 
   /**
-   * Initialize intersection observer.
+   * Adds a spy-target and starts to observe that target.
+   */
+  addTarget(spyTarget: SpyTarget): void {
+    this.spyTargets.push(spyTarget);
+    this.intersectionObserver?.observe(spyTarget.element);
+  }
+
+  /**
+   * Removes a spy-target and stops observing that target.
+   */
+  removeTarget(spyTarget: SpyTarget): void {
+    this.spyTargets = this.spyTargets.filter(spyTarget => spyTarget.id !== spyTarget.id);
+    this.intersectionObserver?.unobserve(spyTarget.element);
+  }
+
+  /**
+   * Stops observing all spy-targets and completes spyTargetIsIntersecting$ subject.
+   */
+  stopSpying(): void {
+    this.resizeSubscription?.unsubscribe();
+    this.intersectionObserver?.disconnect();
+    this.intersectionObserver = null;
+    this.spyTargets = [];
+    this.spyTargetIsIntersectingSubject$.complete();
+  }
+
+  /**
+   * Initialize IntersectionObserver.
    */
   private initIntersectionObserver(scrollContainer?: Element): void {
     this.intersectionObserver?.disconnect();
@@ -78,7 +77,7 @@ export class ScrollSpy {
       (entries) => this.intersectionObserverCallback(entries),
       {
         root: scrollContainer,
-        rootMargin: `-${this.ratio}% 0px -${100 - this.ratio}% 0px` // IntersectionObserver as one line.
+        rootMargin: `-${this.offset}% 0px -${100 - this.offset}% 0px` // IntersectionObserver as one line.
       }
     );
     for (const spyTarget of this.spyTargets) {
@@ -86,22 +85,16 @@ export class ScrollSpy {
     }
   }
 
+  /**
+   * A function which is called when one or more spy-targets have transitioned into a state of intersection (`isIntersecting: true`) or out of a state of intersection (`isIntersecting: false`).
+   */
   private intersectionObserverCallback(entries: IntersectionObserverEntry[]): void {
     for (const entry of entries) {
-      const spyTarget = this.spyTargets.find((item) => item.element === entry.target);
-      this.activeSpyTargetChangedSubject$.next({
-        spyTarget: spyTarget!,
+      const spyTarget = this.spyTargets.find((item) => item.element === entry.target)!;
+      this.spyTargetIsIntersectingSubject$.next({
+        spyTarget,
         isIntersecting: entry.isIntersecting
       });
     }
   }
-}
-
-export interface SpyTargetChangedEvent {
-  spyTarget: SpyTarget;
-  isIntersecting: boolean;
-}
-
-export interface ScrollSpyOptions {
-  scrollContainer?: Element;
 }

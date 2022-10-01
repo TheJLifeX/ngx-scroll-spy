@@ -1,11 +1,12 @@
 import { isPlatformServer } from '@angular/common';
 import { Directive, ElementRef, Input, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
-
 import { ScrollSpyService } from './scroll-spy.service';
-import { SpyTarget } from './spy-target';
+import { SpyTarget } from './models/spy-target';
 
 /**
- * Scroll spy target.
+ * Adds this element as spy-target and starts to observe this target.
+ *
+ * Automatically removes this element as spy-target and stops observing this target when the element is destroyed.
  */
 @Directive({
   selector: '[spyTarget]',
@@ -13,7 +14,16 @@ import { SpyTarget } from './spy-target';
 })
 export class SpyTargetDirective implements OnInit, OnDestroy {
 
+  /**
+   * ID for this spyTarget.
+   */
   @Input() spyTargetId!: string;
+
+  /**
+   * @optional
+   *
+   * ID for the spyTargetContainer containing this spyTarget.
+   */
   @Input() spyTargetContainerId?: string;
 
   private target!: SpyTarget;
@@ -25,11 +35,11 @@ export class SpyTargetDirective implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    if (!this.spyTargetId) {
-      throw new Error('SpyTargetDirective: spyTargetId needs to be set.');
-    }
     if (isPlatformServer(this.platformId)) {
       return;
+    }
+    if (!this.spyTargetId) {
+      throw new Error('SpyTargetDirective: spyTargetId needs to be set.');
     }
     this.target = {
       id: this.spyTargetId,

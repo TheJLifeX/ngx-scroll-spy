@@ -4,7 +4,7 @@ import { filter, Subject, takeUntil } from 'rxjs';
 import { ScrollSpyService } from './scroll-spy.service';
 
 /**
- * Scroll spy.
+ * Spies on the spyTarget that has the provided `spyTargetId`.
  */
 @Directive({
   selector: '[spy]',
@@ -12,8 +12,24 @@ import { ScrollSpyService } from './scroll-spy.service';
 })
 export class SpyDirective implements OnInit, OnDestroy {
 
+  /**
+   * ID of the spyTarget to spy.
+   */
   @Input() spyTargetId!: string;
+
+  /**
+   * @optional
+   *
+   * ID of the spyTargetContainer containing the spyTarget.
+   */
   @Input() spyTargetContainerId?: string;
+
+  /**
+   * Class name to add to this element when the spyTarget has transitioned into a state of intersection (is visisble).
+   *
+   * @default
+   * 'active'
+   */
   @Input() spyActiveClass: string = 'active';
 
   @HostBinding('class') activeClassInDOM?: string;
@@ -27,13 +43,13 @@ export class SpyDirective implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    if (!this.spyTargetId) {
-      throw new Error('SpyDirective: spyTargetId needs to be set.');
-    }
     if (isPlatformServer(this.platformId)) {
       return;
     }
-    this.scrollSpyService.getActiveSpyTargetChanged$(this.spyTargetContainerId)
+    if (!this.spyTargetId) {
+      throw new Error('SpyDirective: spyTargetId needs to be set.');
+    }
+    this.scrollSpyService.getSpyTargetIsIntersecting$(this.spyTargetContainerId)
       .pipe(
         takeUntil(this.directiveDestroyed$),
         filter((event) =>

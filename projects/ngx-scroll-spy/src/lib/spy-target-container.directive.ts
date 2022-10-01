@@ -3,7 +3,9 @@ import { Directive, Input, OnInit, OnDestroy, Inject, PLATFORM_ID, ElementRef } 
 import { ScrollSpyService } from './scroll-spy.service';
 
 /**
- * Scroll target scroll container for scroll spy.
+ * Creates a scroll-spy on this spy targets container (element).
+ *
+ * Automatically destroys the scroll-spy when the element is destroyed.
  */
 @Directive({
   selector: '[spyTargetContainer]',
@@ -11,6 +13,9 @@ import { ScrollSpyService } from './scroll-spy.service';
 })
 export class SpyTargetContainerDirective implements OnInit, OnDestroy {
 
+  /**
+   * ID for this spyTargetContainer.
+   */
   @Input() spyTargetContainerId!: string;
 
   constructor(
@@ -20,11 +25,11 @@ export class SpyTargetContainerDirective implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    if (!this.spyTargetContainerId) {
-      throw new Error('SpyTargetContainerDirective: spyTargetContainerId needs to be set.');
-    }
     if (isPlatformServer(this.platformId)) {
       return;
+    }
+    if (!this.spyTargetContainerId) {
+      throw new Error('SpyTargetContainerDirective: spyTargetContainerId needs to be set.');
     }
     this.scrollSpyService.createScrollSpy(this.spyTargetContainerId, this.elementRef.nativeElement);
   }
