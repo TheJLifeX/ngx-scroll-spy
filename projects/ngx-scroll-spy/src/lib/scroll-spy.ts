@@ -6,7 +6,7 @@ import { SpyTargetIsIntersectingEvent } from './models/spy-target-is-intersectin
 /**
  * Encapsulates the logic for scroll spy on a scrollable element (`scrollContainer`).
  *
- * Scroll spy based on the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
+ * Scroll spy uses the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
  * Still works properly after the window is resized.
  *
  * Inspired by:

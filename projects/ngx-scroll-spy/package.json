@@ -9,9 +9,20 @@
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "description": "@todo",
+  "description": "An Angular library that can spy the position of elements (inside a scrollable container) and emit the currently active (visible) element in the viewport. This library uses the Intersection Observer API.",
   "keywords": [
-    "@todo"
+    "Angular",
+    "scrollspy",
+    "scroll-spy",
+    "scroll spy",
+    "directive",
+    "nav",
+    "navbar",
+    "active",
+    "scroll",
+    "spy",
+    "intersection observer",
+    "ngx-scroll-spy"
   ],
   "homepage": "https://github.com/TheJLifeX/ngx-scroll-spy#readme",
   "bugs": {
