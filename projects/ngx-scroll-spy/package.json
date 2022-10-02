@@ -1,5 +1,5 @@
 {
-  "name": "ngx-scroll-spy",
+  "name": "@thejlifex/ngx-scroll-spy",
   "version": "0.0.1",
   "author": "Ulrich Tiofack",
   "peerDependencies": {

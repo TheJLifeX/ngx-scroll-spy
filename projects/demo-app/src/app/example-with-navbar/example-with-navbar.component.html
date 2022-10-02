@@ -1,0 +1,34 @@
+<nav class="navbar navbar-light bg-light navbar-box-shadow">
+  <span class="navbar-brand">{{ exampleNavBar.title }}</span>
+  <ul class="nav nav-pills">
+    <li
+      class="nav-item"
+      *ngFor="let item of exampleNavBar.items"
+    >
+      <span
+        class="nav-link"
+        spy
+        [spyTargetId]="item.fragment"
+        [spyTargetContainerId]="exampleNavBar.spyTargetContainerId"
+        [spyActiveClass]="exampleNavBar.spyActiveClass"
+      >{{ item.name }}</span>
+    </li>
+  </ul>
+</nav>
+<div
+  spyTargetContainer
+  [spyTargetContainerId]="exampleNavBar.spyTargetContainerId"
+  style="height: 300px; overflow: auto;"
+  class="p-3"
+>
+  <div
+    *ngFor="let item of exampleNavBar.items"
+    spyTarget
+    [spyTargetId]="item.fragment"
+    [spyTargetContainerId]="exampleNavBar.spyTargetContainerId"
+    class="pb-4"
+  >
+    <h3 class="mb-2"> {{ item.name }}</h3>
+    <span>{{ 5 | loremIpsum }}</span>
+  </div>
+</div>

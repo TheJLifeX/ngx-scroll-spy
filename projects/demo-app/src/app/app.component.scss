@@ -6,8 +6,18 @@ main {
   margin-top: 6rem;
 }
 
-div.section {
-  background-color: aqua;
+.section-example {
+  background-color: var(--app-lighter-color);
+  border-radius: var(--app-border-radius);
+  box-shadow: var(--app-card-box-shadow);
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+footer {
+  color: var(--app-footer-text-color);
+  background-color: var(--app-footer-background-color);
+  padding: 2rem;
 }
 
 #line {

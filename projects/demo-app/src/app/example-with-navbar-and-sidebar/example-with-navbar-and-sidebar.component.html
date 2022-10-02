@@ -1,0 +1,64 @@
+<nav class="navbar navbar-light bg-light navbar-box-shadow">
+  <span class="navbar-brand">{{ exampleNavBarAndSideBar.title }}</span>
+  <ul class="nav nav-pills">
+    <li
+      class="nav-item"
+      *ngFor="let item of exampleNavBarAndSideBar.navBarItems"
+    >
+      <span
+        class="nav-link"
+        spy
+        [spyTargetId]="item.fragment"
+        [spyTargetContainerId]="exampleNavBarAndSideBar.spyTargetContainerId"
+        [spyActiveClass]="exampleNavBarAndSideBar.spyActiveClass"
+      >{{ item.name }}</span>
+    </li>
+  </ul>
+</nav>
+<div class="row">
+  <div class="col-3">
+    <div class="list-group">
+      <span
+        class="list-group-item list-group-item-action"
+        *ngFor="let item of exampleNavBarAndSideBar.sidebarItems"
+        spy
+        [spyTargetId]="item.fragment"
+        [spyTargetContainerId]="exampleNavBarAndSideBar.spyTargetContainerId"
+        [spyActiveClass]="exampleNavBarAndSideBar.spyActiveClass"
+      >
+        {{ item.name }}
+      </span>
+    </div>
+  </div>
+  <div
+    class="col-9"
+    spyTargetContainer
+    [spyTargetContainerId]="exampleNavBarAndSideBar.spyTargetContainerId"
+    style="height: 300px; overflow: auto;"
+  >
+    <div
+      *ngFor="let item of exampleNavBarAndSideBar.navBarItems"
+      spyTarget
+      [spyTargetId]="item.fragment"
+      [spyTargetContainerId]="exampleNavBarAndSideBar.spyTargetContainerId"
+    >
+      <h3>{{ item.name }}</h3>
+      <ng-container *ngIf="item.fragment === 'pricing'; else elseTemplate">
+        <div class="m-3">
+          <div
+            *ngFor="let sidebarItem of exampleNavBarAndSideBar.sidebarItems"
+            spyTarget
+            [spyTargetId]="sidebarItem.fragment"
+            [spyTargetContainerId]="exampleNavBarAndSideBar.spyTargetContainerId"
+          >
+            <h4>{{ sidebarItem.name }}</h4>
+            <span>{{ 3 | loremIpsum }}</span>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <span>{{ 5 | loremIpsum }}</span>
+      </ng-template>
+    </div>
+  </div>
+</div>

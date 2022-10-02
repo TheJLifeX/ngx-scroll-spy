@@ -1,6 +1,6 @@
 # NgxScrollSpy
 
-[![NPM](https://img.shields.io/npm/v/ngx-scroll-spy?label=NPM&color=blue)](https://www.npmjs.com/package/ngx-scroll-spy "View this project on NPM.") [![NPM downloads](https://img.shields.io/npm/dt/ngx-scroll-spy?label=NPM%20downloads)](https://www.npmjs.com/package/ngx-scroll-spy "View this project on NPM.")
+[![NPM](https://img.shields.io/npm/v/@thejlifex/ngx-scroll-spy?label=NPM&color=blue)](https://www.npmjs.com/package/@thejlifex/ngx-scroll-spy "View this project on NPM.") [![NPM downloads](https://img.shields.io/npm/dt/@thejlifex/ngx-scroll-spy?label=NPM%20downloads)](https://www.npmjs.com/package/@thejlifex/ngx-scroll-spy "View this project on NPM.")
 
 ## Angular scroll spy library
 An Angular library that can automatically spy the position of elements (inside a scrollable container) and emit the currently active (visible) element in the viewport (add and remove the spyActiveClass, default: `active`).
@@ -16,7 +16,7 @@ An Angular library that can automatically spy the position of elements (inside a
 
 ## Installation
 ```sh
-npm install ngx-scroll-spy --save
+npm install @thejlifex/ngx-scroll-spy --save
 ```
 
 ### Step 01: Import the `SpyDirective` and `SpyTargetDirective` to your module (or to your standalone component).
@@ -26,7 +26,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 
-import { SpyDirective, SpyTargetDirective } from 'ngx-scroll-spy';
+import { SpyDirective, SpyTargetDirective } from '@thejlifex/ngx-scroll-spy';
 
 @NgModule({
   declarations: [AppComponent],
@@ -103,7 +103,7 @@ where you want to have a scroll-spy.
 
 ### Step 01: Import additionally the `SpyTargetContainerDirective` to your module (or to your standalone component).
 ```ts
-import { ..., SpyTargetContainerDirective } from 'ngx-scroll-spy';
+import { ..., SpyTargetContainerDirective } from '@thejlifex/ngx-scroll-spy';
 
 ...
 

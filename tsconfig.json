@@ -12,7 +12,7 @@
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "paths": {
-      "ngx-scroll-spy": [
+      "@thejlifex/ngx-scroll-spy": [
         "dist/ngx-scroll-spy"
       ]
     },

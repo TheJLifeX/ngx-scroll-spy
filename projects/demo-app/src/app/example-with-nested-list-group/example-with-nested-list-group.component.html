@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-3">
+    <div class="list-group list-group-root">
+      <ng-container *ngFor="let item of exampleNestedListGroup.items">
+        <span
+          class="list-group-item"
+          spy
+          [spyTargetId]="item.fragment"
+          [spyTargetContainerId]="exampleNestedListGroup.spyTargetContainerId"
+          [spyActiveClass]="exampleNestedListGroup.spyActiveClass"
+        >
+          {{ item.name }}
+        </span>
+        <div
+          class="list-group"
+          *ngIf="item.subItems"
+        >
+          <span
+            class="list-group-item"
+            *ngFor="let subItem of item.subItems"
+            spy
+            [spyTargetId]="subItem.fragment"
+            [spyTargetContainerId]="exampleNestedListGroup.spyTargetContainerId"
+            [spyActiveClass]="exampleNestedListGroup.spyActiveClass"
+          >
+            {{ subItem.name }}
+          </span>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div
+    class="col-9"
+    spyTargetContainer
+    [spyTargetContainerId]="exampleNestedListGroup.spyTargetContainerId"
+    style="height: 415px; overflow: auto;"
+  >
+    <div
+      *ngFor="let item of exampleNestedListGroup.items"
+      spyTarget
+      [spyTargetId]="item.fragment"
+      [spyTargetContainerId]="exampleNestedListGroup.spyTargetContainerId"
+    >
+      <h3> {{ item.name }}</h3>
+      <ng-container *ngIf="item.subItems; else elseTemplate">
+        <div class="m-3">
+          <div
+            *ngFor="let subItem of item.subItems"
+            spyTarget
+            [spyTargetId]="subItem.fragment"
+            [spyTargetContainerId]="exampleNestedListGroup.spyTargetContainerId"
+          >
+            <h4>{{ subItem.name }}</h4>
+            <span>{{ 3 | loremIpsum }}</span>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <span>{{ 10 | loremIpsum }}</span>
+      </ng-template>
+    </div>
+  </div>
+</div>

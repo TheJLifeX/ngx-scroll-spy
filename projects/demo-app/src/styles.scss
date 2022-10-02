@@ -32,10 +32,14 @@ hr.intersection-line {
   width: 100%;
 }
 
+.navbar-box-shadow {
+  box-shadow: 0 6px 20px 0 rgb(0 0 0 / 19%);
+}
+
 // Overwrite bootstrap styles
 @media (min-width: 1200px) {
   .container {
-    max-width: 1340px;
+    max-width: 1200px;
   }
 }
 
