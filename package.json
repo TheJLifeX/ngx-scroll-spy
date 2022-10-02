@@ -5,7 +5,7 @@
     "dev--ngx-scroll-spy": "ng build ngx-scroll-spy --watch",
     "dev--demo-app": "ng serve demo-app --open",
     "build": "powershell rm ./dist/* -Recurse && ng build ngx-scroll-spy --configuration=production && powershell cp ./LICENSE,./README.md ./dist/ngx-scroll-spy/",
-    "publish-library": "npm run build && npm publish ./dist/ngx-scroll-spy/ && powershell rm ./dist/* -Recurse"
+    "publish-library": "npm run build && npm publish ./dist/ngx-scroll-spy/ --access=public && powershell rm ./dist/* -Recurse"
   },
   "private": true,
   "dependencies": {
