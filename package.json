@@ -1,6 +1,6 @@
 {
   "name": "ngx-scroll-spy",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "dev--ngx-scroll-spy": "ng build ngx-scroll-spy --watch",
     "dev--demo-app": "ng serve demo-app --open",
