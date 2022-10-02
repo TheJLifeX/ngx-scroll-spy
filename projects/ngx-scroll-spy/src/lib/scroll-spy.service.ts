@@ -1,8 +1,9 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Inject, Injectable, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ScrollSpy } from './scroll-spy';
 import { SpyTarget } from './models/spy-target';
 import { SpyTargetIsIntersectingEvent } from './models/spy-target-is-intersecting-event';
+import { isPlatformServer } from '@angular/common';
 
 /**
  * Scroll spy service.
@@ -18,18 +19,27 @@ export class ScrollSpyService implements OnDestroy {
   /**
    * Default scroll-spy on the default scroll element (Document/Body).
    */
-  private readonly defaultScrollSpy: ScrollSpy = new ScrollSpy();
+  private readonly defaultScrollSpy!: ScrollSpy;
   /**
    * Map containing created scroll-spies (on any scrollable elements).
    *
    * @key scrollContainerId
    * @value ScrollSpy
    */
-  private readonly scrollSpies: Map<string, ScrollSpy> = new Map();
+  private readonly scrollSpies!: Map<string, ScrollSpy>;
 
-  constructor() { }
+  constructor(@Inject(PLATFORM_ID) private platformId: string) {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+    this.defaultScrollSpy = new ScrollSpy();
+    this.scrollSpies = new Map();
+  }
 
   ngOnDestroy(): void {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
     this.defaultScrollSpy.stopSpying();
     this.scrollSpies.forEach((item) => item.stopSpying());
     this.scrollSpies.clear();
